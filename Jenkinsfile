@@ -81,7 +81,7 @@ pipeline {
                 }
             }
         }
-        stage('Docker Image Push') {
+        stage('Docker Image Push (agent2)') {
             agent { label 'agent2' }
             steps {
                 script {
@@ -91,7 +91,7 @@ pipeline {
                 }
             }
         }
-        stage('Staging Deploy') {
+        stage('Staging Deploy (master)') {
             agent { label 'master' }
             steps {
                 sshagent(credentials: ['Staging-PrivateKey']) {
@@ -109,7 +109,7 @@ pipeline {
                 }
             }
         }
-        stage ('JMeter LoadTest') {
+        stage ('JMeter LoadTest (agent1)') {
             agent { label 'agent1' }
             steps { 
                 sh '~/lab/sw/jmeter/bin/jmeter.sh -j jmeter.save.saveservice.output_format=xml -n -t src/main/jmx/guestbook_loadtest.jmx -l loadtest_result.jtl' 
